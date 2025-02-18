@@ -1,0 +1,27 @@
+[
+    {
+        "userName": "sagiezra",
+        "email": "test@user.com",
+        "password": "testpassword"
+    },
+    {
+        "email": "yael@gmail.com",
+        "password": "Aa1234567890",
+        "gender": "female",
+        "userName": "yaelha1234",
+        "firstName": "yael.",
+        "lastName" : "hamami",
+        "phone_number": "0545325447",
+        "date_of_birth": "2019-01-16"
+    },
+    {
+        "email": "yael2@gmail.com",
+        "password": "Aa1234567890",
+        "gender": "female"
+    },
+    {
+        "email": "yael@gmail.com",
+        "password": "Aa1234567890",
+        "gender": "male"
+    }
+]
