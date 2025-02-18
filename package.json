@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YaelHamami/first_app.git"
+    "url": "git+https://github.com/boazAvami/backend-storybox.git"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
