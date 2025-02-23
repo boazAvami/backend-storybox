@@ -9,6 +9,7 @@ import { authRouter } from './routes/auth_route';
 import { usersRouter } from './routes/users_route';
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
+import { conversationsRouter } from './routes/conversations_router';
 
 dotenv.config();
 const port = process.env.PORT;
@@ -21,6 +22,7 @@ app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 app.use('/users', usersRouter);
+app.use('/conversations', conversationsRouter);
 
 const options = {
     definition: {
