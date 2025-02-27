@@ -30,4 +30,4 @@ export const genresRouter = express.Router();
  *       500:
  *         description: Internal server error
  */
-genresRouter.get("/", genresController.getGenres.bind(genresController));
+genresRouter.post("/", genresController.getGenres.bind(genresController));
