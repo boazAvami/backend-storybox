@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import { postModel } from "./posts_model";
+import { commentModel } from "./comments_model";
 
 export interface IUser {
   _id?: string;
@@ -9,6 +11,10 @@ export interface IUser {
   lastName?: string | null;
   phone_number?: string | null;
   date_of_birth?: Date | null;
+  date_joined?: Date | null;
+  profile_picture_uri?: string;
+  is_connected: boolean;
+  provider: string;
   gender?: string | null;
   refreshToken?: string[];
 }
@@ -40,6 +46,22 @@ const userSchema = new mongoose.Schema<IUser>({
     type: Date,
     default: null,
   },
+  date_joined: {
+    type: Date,
+    default: Date.now,
+  },
+  profile_picture_uri: {
+    type: String,
+    default: null,
+  },
+  is_connected: {
+    type: Boolean,
+    default: false,
+  },
+  provider: { 
+    type: String, 
+    // required: true 
+  },
   gender: {
     type: String,
     enum: ['male', 'female', 'other', null], // Restrict to valid gender values
@@ -50,11 +72,25 @@ const userSchema = new mongoose.Schema<IUser>({
     required: true,
     unique: true, // Ensure that emails are unique
     trim: true,
+    lowercase: true
   },
   refreshToken: {
     type: [String],
     default: [],
   }
 });
+
+/** 
+ * Mongoose Middleware for cascading delete when a user is deleted 
+ */
+userSchema.pre("findOneAndDelete", async function (next) {
+  const userId = this.getFilter()["_id"]; // Get the user ID being deleted
+  if (userId) {
+    await postModel.deleteMany({ ownerId: userId }); // ✅ Delete all posts by this user
+    await commentModel.deleteMany({ ownerId: userId }); // ✅ Delete all comments by this user
+  }
+  next();
+});
+
 
 export const userModel = mongoose.model<IUser>("Users", userSchema);

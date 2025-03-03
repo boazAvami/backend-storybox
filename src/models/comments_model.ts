@@ -1,15 +1,17 @@
 import mongoose from "mongoose";
 
 export interface IComments {
-    postId: string;
-    comment: string;
-    ownerId: string;
+    // _id?: string;
+    postId: mongoose.Types.ObjectId;
+    ownerId: mongoose.Types.ObjectId;
+    content: string;
+    created_at: Date;
   }
 
-const CommentSchema = new mongoose.Schema({
+const CommentSchema = new mongoose.Schema<IComments>({
     postId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post',
+        ref: 'Posts',
         required: true
     },
     content: {
@@ -18,8 +20,12 @@ const CommentSchema = new mongoose.Schema({
     },
     ownerId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Users',
         required: true
+    },
+    created_at: {
+        type: Date,
+        default: Date.now,
     },
 });
 

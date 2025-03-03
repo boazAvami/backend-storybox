@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import {userModel, IUser} from "../models/users_model";
 import BaseController from "./base_controller";
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 import { authenticatedRequest } from "./base_controller";
 import { hashPassword } from "./auth_controller";
 
