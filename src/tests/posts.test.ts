@@ -48,7 +48,6 @@ describe("Posts Tests", () => {
         ).send(postsMock[0]);
         expect(response.statusCode).toBe(201);
         expect(response.body.content).toBe(postsMock[0].content);
-        expect(response.body.title).toBe(postsMock[0].title);
         expect(response.body.ownerId).toBe(postsMock[0].ownerId);
         postId = response.body._id;
     });
@@ -58,7 +57,6 @@ describe("Posts Tests", () => {
         );
         expect(response.statusCode).toBe(200);
         expect(response.body.content).toBe(postsMock[0].content);
-        expect(response.body.title).toBe(postsMock[0].title);
         expect(response.body.ownerId).toBe(postsMock[0].ownerId);
     });
 
@@ -69,12 +67,11 @@ describe("Posts Tests", () => {
         expect(response.statusCode).toBe(200);
         expect(response.body.length).toBe(1);
         expect(response.body[0].content).toBe(postsMock[0].content);
-        expect(response.body[0].title).toBe(postsMock[0].title);
         expect(response.body[0].ownerId).toBe(postsMock[0].ownerId);
     });
 
     test("Test get post by senderId- bad Request", async () => {
-        const response = await request(app).get("/posts?sender=" + postsMock[0].title).set(
+        const response = await request(app).get("/posts?sender=" + postsMock[0].content).set(
             { authorization: "JWT " + testUser.accessToken }
         );
         expect(response.statusCode).toBe(400);

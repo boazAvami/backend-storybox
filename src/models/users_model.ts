@@ -13,8 +13,8 @@ export interface IUser {
   date_of_birth?: Date | null;
   date_joined?: Date | null;
   profile_picture_uri?: string;
-  is_connected: boolean;
-  provider: string;
+  is_connected?: boolean;
+  provider?: string | null;
   gender?: string | null;
   refreshToken?: string[];
 }
@@ -56,7 +56,7 @@ const userSchema = new mongoose.Schema<IUser>({
   },
   is_connected: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   provider: { 
     type: String, 

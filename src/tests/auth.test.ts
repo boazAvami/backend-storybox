@@ -41,6 +41,9 @@ const testUser: User = {
     userName: "sagiezra",
     email: "test@user.com",
     password: "testpassword",
+    firstName: "sagi",
+    lastName: "ezra",
+    phone_number: "0545325447",
 }
 
 const testUser2: User = {
@@ -539,7 +542,6 @@ describe("Auth Tests", () => {
     let postId = ""
     test("Test fail Update Post - token expired", async () => {
         const portResponse = await request(app).post("/posts").send({
-            title: postsMock[0].title,
             content: postsMock[0].content
         }).set(
             { authorization: "JWT " + testUser.accessToken }
