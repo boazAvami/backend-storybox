@@ -9,6 +9,7 @@ import { authRouter } from './routes/auth_route';
 import { usersRouter } from './routes/users_route';
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
+import { genresRouter } from './routes/genres_route';
 
 dotenv.config();
 const port = process.env.PORT;
@@ -17,10 +18,12 @@ const app = express();
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/genres', genresRouter);
 app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 app.use('/users', usersRouter);
+
 
 const options = {
     definition: {
