@@ -80,8 +80,8 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-  "userName": "yaeltest",
-  "email": "yTrst@gmail",
+  "userName": "shirintest",
+  "email": "shirinTest@gmail",
   "password": "123"
 }
 
@@ -91,7 +91,7 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "yaeli112@gmail",
+  "email": "shirinTest@gmail",
   "password": "ssss"
 }
 
@@ -99,12 +99,11 @@ Content-Type: application/json
 ### Delete User
 
 DELETE http://localhost:3000/users/678cf46848b675db0dbf62a7
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzhjZjQ2ODQ4YjY3NWRiMGRiZjYyYTciLCJyYW5kb20iOiIwLjA1Mjg2OTg4NDE0NjE5NTY0NSIsImlhdCI6MTczNzI5MDg2MiwiZXhwIjoxNzM3ODk1NjYyfQ.mirGMkkvHcHvO_hfwFuPZrzwB_JhvPmr_m8mvEILrdI
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M3MzJlMGI0MmExMjQyOTM5ZTUyN2EiLCJyYW5kb20iOiIwLjYyOTQ4NDY0MDc5NzYyMzYiLCJpYXQiOjE3NDExMDc5NjMsImV4cCI6MTc0MTcxMjc2M30.PP-OVQ3pscE3VQkaTUZcXurvhbV1wzyjal8K83H2Zx4
 
 ### Get User By Id
 GET http://localhost:3000/users/678cf46848b675db0dbf62a7
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzhjZjQ2ODQ4YjY3NWRiMGRiZjYyYTciLCJyYW5kb20iOiIwLjA1Mjg2OTg4NDE0NjE5NTY0NSIsImlhdCI6MTczNzI5MDg2MiwiZXhwIjoxNzM3ODk1NjYyfQ.mirGMkkvHcHvO_hfwFuPZrzwB_JhvPmr_m8mvEILrdI
-
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M3MzJlMGI0MmExMjQyOTM5ZTUyN2EiLCJyYW5kb20iOiIwLjYyOTQ4NDY0MDc5NzYyMzYiLCJpYXQiOjE3NDExMDc5NjMsImV4cCI6MTc0MTcxMjc2M30.PP-OVQ3pscE3VQkaTUZcXurvhbV1wzyjal8K83H2Zx4
 
 ### Get All Users
 

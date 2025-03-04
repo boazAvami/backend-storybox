@@ -10,6 +10,7 @@ import { usersRouter } from './routes/users_route';
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 import { genresRouter } from './routes/genres_route';
+import likesRouter from './routes/likes_route';
 
 dotenv.config();
 const port = process.env.PORT;
@@ -23,6 +24,7 @@ app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 app.use('/users', usersRouter);
+app.use("/likes", likesRouter);
 
 
 const options = {
