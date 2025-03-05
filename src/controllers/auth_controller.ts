@@ -16,12 +16,18 @@ export const hashPassword = async(password: string) => {
 }
 export const register = async (req: Request, res: Response) => {
     try {
-        const { password, userName, email } = req.body
+        const { password, userName, email, firstName, lastName, phone_number, date_of_birth, profile_picture_uri, gender } = req.body
         const hashedPassword = await hashPassword(password);
         const user = await userModel.create({
             email,
             password: hashedPassword,
-            userName
+            userName: userName,
+            firstName: firstName ? firstName : null,
+            lastName: lastName ? lastName : null,
+            phone_number: phone_number ? phone_number : null,
+            date_of_birth: date_of_birth ? date_of_birth : null,
+            profile_picture_uri: profile_picture_uri ? profile_picture_uri : null,
+            gender: gender ? gender : null,
         });
         res.status(200).send(user);
     } catch (err) {
@@ -33,6 +39,7 @@ type tTokens = {
     accessToken: string,
     refreshToken: string
 }
+
 export const generateToken = (userId: string): tTokens | null => {
     if (!process.env.ACCESS_TOKEN_SECRET || !process.env.REFRESH_TOKEN_SECRET) {
         return null;
@@ -86,7 +93,8 @@ export const login = async (req: Request, res: Response) => {
             user.refreshToken.push(tokens.refreshToken);
         }
 
-        await user.save()
+        user.is_connected = true;
+        await user.save();
         res.status(200).send({ 
             accessToken: tokens.accessToken,
             refreshToken: tokens.refreshToken,
@@ -184,6 +192,8 @@ export const refreshToken = async (req: Request, res: Response) => {
 export const logout = async (req: Request, res: Response) => {
     try {
         const user = await verifyRefreshToken(req.body.refreshToken);
+
+        user.is_connected = false;
         await user.save();
         res.status(200).send("success");
     } catch {

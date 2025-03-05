@@ -73,22 +73,22 @@ class CommentsController extends BaseController<IComments> {
             }
         };
 
-        async create(req: Request, res: Response) {
-            const postId = req.body.postId;
+    async create(req: Request, res: Response) {
+        const postId = req.body.postId;
 
-            try {
-                // Check if the post exists by finding the post ID
-                const postExists = await postModel.findById(postId);
+        try {
+            // Check if the post exists by finding the post ID
+            const postExists = await postModel.findById(postId);
 
-                if (!postExists) {
-                    res.status(404).json({ message: 'Post not found' });
-                } else {
-                    await super.create(req, res);
-                }
-            } catch (error) {
-                res.status(400).send(error);
+            if (!postExists) {
+                res.status(404).json({ message: 'Post not found' });
+            } else {
+                await super.create(req, res);
             }
-        };
+        } catch (error) {
+            res.status(400).send(error);
+        }
+    };
 }
 
 export default new CommentsController();
