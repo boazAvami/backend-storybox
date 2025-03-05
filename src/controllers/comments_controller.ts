@@ -62,8 +62,12 @@ class CommentsController extends BaseController<IComments> {
         try {
                 const comment = await super.getByIdInternal(commentId)
                 const commntOwnerId = comment.ownerId.toString()
+                const postId = comment.postId;
     
                 await super.delete(req, res, commntOwnerId)
+
+                await postModel.findByIdAndUpdate(postId, { $inc: { comment_count: -1 } });
+                
             } catch (err) {
                 if (err.message === 'Item Not Found') {
                     res.status(404).json({error: 'Comment Not Found'})
@@ -84,6 +88,7 @@ class CommentsController extends BaseController<IComments> {
                 res.status(404).json({ message: 'Post not found' });
             } else {
                 await super.create(req, res);
+                await postModel.findByIdAndUpdate(postId, { $inc: { comment_count: 1 } });
             }
         } catch (error) {
             res.status(400).send(error);
