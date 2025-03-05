@@ -5,6 +5,8 @@
   "main": "src/app.ts",
   "scripts": {
     "start": "nodemon ./src/app.ts",
+    "deploy": "npm run build && pm2 start dist/app.js --name StoryBox-Server --watch",
+    "build": "tsc",
     "test": "jest --coverage --detectOpenHandles --forceExit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
@@ -23,6 +25,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.3",
     "package.json": "^0.0.0",
+    "pm2": "^5.4.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },
