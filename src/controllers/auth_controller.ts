@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { IUser, userModel } from '../models/users_model';
 import { Document } from 'mongoose';
+import { OAuth2Client } from 'google-auth-library';
 
 export const hashPassword = async(password: string) => {
     try {
@@ -14,6 +15,7 @@ export const hashPassword = async(password: string) => {
     }
     
 }
+
 export const register = async (req: Request, res: Response) => {
     try {
         const { password, userName, email, firstName, lastName, phone_number, date_of_birth, profile_picture_uri, gender } = req.body
@@ -226,4 +228,63 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
         req.params.userId = (payload as Payload)._id;
         next();
     });
+};
+
+export const client = new OAuth2Client();
+export const googleSignin = async (req: Request, res: Response) => {
+    console.log("Received body:", req.body);
+    
+    try {
+        if (!req.body.credential) {
+            res.status(400).send("Missing credential in request");
+        }
+
+        const ticket = await client.verifyIdToken({
+        idToken: req.body.credential,
+        audience: process.env.GOOGLE_CLIENT_ID,
+        });
+
+        const payload = ticket.getPayload();
+        if (!payload || !payload.email) {
+            console.log("No email received from Google");
+            res.status(400).send("Invalid Google token: Missing email");
+        }
+
+        const email = payload?.email;
+        console.log("Google Payload:", payload);
+        
+        if (email != null) {
+        let user = await userModel.findOne({ email: email });
+        
+        if (user == null || !user) {
+            console.log("Creating new user...");
+
+            user = await userModel.create({
+            email: email,
+            userName: payload.email.split('@')[0],
+            password: "google-signin",
+            profile_picture_uri: payload?.picture ? payload?.picture : null,
+            });
+        }
+        
+        const tokens = await generateToken(user._id);
+        console.log("Successfully signed in with Google:", { email: user.email, _id: user._id });
+
+        console.log("Sending Response:", {
+            email: user.email,
+            _id: user._id,
+            profile_picture_uri: user.profile_picture_uri,
+            ...tokens,
+        });
+
+        res.status(200).send({
+            email: user.email,
+            _id: user._id,
+            profile_picture_uri: user.profile_picture_uri,
+            ...tokens,
+        });
+        }
+    } catch {
+        res.status(500).send("Server Error");
+    }
 };

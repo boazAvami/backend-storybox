@@ -1,11 +1,11 @@
 {
-  "name": "app_a",
+  "name": "backend-storybox",
   "version": "1.0.0",
   "description": "",
   "main": "src/app.ts",
   "scripts": {
     "start": "nodemon ./src/app.ts",
-    "test": "jest --coverage --detectOpenHandles --forceExit",
+    "test": "jest --coverage --detectOpenHandles --forceExit google.auth.test.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
@@ -15,13 +15,17 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.22.0",
+    "@types/multer": "^1.4.12",
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "google-auth-library": "^9.15.1",
+    "googleapis": "^146.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.3",
+    "multer": "^1.4.5-lts.1",
     "package.json": "^0.0.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
@@ -48,7 +52,7 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/YaelHamami/app_a/issues"
+    "url": "https://github.com/boazAvami/backend-storybox/issues"
   },
-  "homepage": "https://github.com/YaelHamami/app_a#readme"
+  "homepage": "https://github.com/boazAvami/backend-storybox#readme"
 }

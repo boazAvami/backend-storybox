@@ -10,28 +10,37 @@ import { usersRouter } from './routes/users_route';
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 import { genresRouter } from './routes/genres_route';
+import { filesRouter } from './routes/files_route';
 
 dotenv.config();
 const port = process.env.PORT;
 const app = express();
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
+    res.header("Access-Control-Allow-Methods", "*");
+    next();
+});
 app.use('/genres', genresRouter);
 app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 app.use('/users', usersRouter);
 
+app.use("/public", express.static("public"));
+app.use('/files', filesRouter);
 
 const options = {
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "REST API - Sagi&Yael Backend",
+            title: "REST API - Yael&Shirin&Boaz StoryBox Backend",
             version: "1.0.0",
-            description: "REST server including authentication using JWT",
+            description: "The StoryBox REST server including authentication using JWT",
         },
         servers: [{ url: `http://localhost:${port}`, },],
     },
@@ -61,3 +70,5 @@ export const initApp = () => {
         }
     });
 };
+
+export default initApp;
