@@ -14,12 +14,12 @@ Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzhjZjQ2ODQ4
 
 ### Create Post
 POST http://localhost:3000/posts
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzhjZjQ2ODQ4YjY3NWRiMGRiZjYyYTciLCJyYW5kb20iOiIwLjA1Mjg2OTg4NDE0NjE5NTY0NSIsImlhdCI6MTczNzI5MDg2MiwiZXhwIjoxNzM3ODk1NjYyfQ.mirGMkkvHcHvO_hfwFuPZrzwB_JhvPmr_m8mvEILrdI
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M3MzJlMGI0MmExMjQyOTM5ZTUyN2EiLCJyYW5kb20iOiIwLjg3NTE1NzEwNTA2MTU5MSIsImlhdCI6MTc0MTE4MjMyOSwiZXhwIjoxNzQxNzg3MTI5fQ.KKvHIrUdEdpxp41G4qCQvJlW50UfPFk6_eKuCd5RlTY
 Content-Type: application/json
 
 {
-"title": "yyyyyy", 
-"content": "My Post..."
+"title": "post shirin", 
+"content": "My Post shirin new"
 }
 
 ### Update Post
@@ -92,7 +92,7 @@ Content-Type: application/json
 
 {
   "email": "shirinTest@gmail",
-  "password": "ssss"
+  "password": "123"
 }
 
 
@@ -125,3 +125,18 @@ Content-Type: application/json
   "email": "yaeli112@gmail",
   "password": "ssss"
 }
+
+
+### Create like
+POST http://localhost:3000/likes
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M3MzJlMGI0MmExMjQyOTM5ZTUyN2EiLCJyYW5kb20iOiIwLjc1OTc1OTY3NjUxODE3NzEiLCJpYXQiOjE3NDExODI2MTEsImV4cCI6MTc0MTc4NzQxMX0.1ymJ1NFWyBMYo6mnUA944oluwJ5nB6UU32lQCPmWvs8
+Content-Type: application/json
+
+{
+  "postId": "67c855a3fc765b5e940058b3"
+}
+
+### Delete like
+
+DELETE http://localhost:3000/likes/67c858bae9dfcce84f3238d3
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M3MzJlMGI0MmExMjQyOTM5ZTUyN2EiLCJyYW5kb20iOiIwLjc1OTc1OTY3NjUxODE3NzEiLCJpYXQiOjE3NDExODI2MTEsImV4cCI6MTc0MTc4NzQxMX0.1ymJ1NFWyBMYo6mnUA944oluwJ5nB6UU32lQCPmWvs8

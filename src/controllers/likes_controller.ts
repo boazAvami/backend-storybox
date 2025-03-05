@@ -51,7 +51,7 @@ class LikesController extends BaseController<ILike> {
         try {
             // Find like
             const like = await super.getByIdInternal(likeId);
-            const likeOwnerId = like.userId.toString();
+            const likeOwnerId = like.ownerId.toString();
     
             // Delete like
             await super.delete(req, res, likeOwnerId);

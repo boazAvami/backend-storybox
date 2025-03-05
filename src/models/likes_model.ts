@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export interface ILike {
     postId: string;
-    userId: string;
+    ownerId: string;
 }
 
 const LikeSchema = new mongoose.Schema({
@@ -11,7 +11,7 @@ const LikeSchema = new mongoose.Schema({
         ref: "Post",
         required: true
     },
-    userId: {
+    ownerId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
