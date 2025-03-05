@@ -28,40 +28,46 @@ class LikesController extends BaseController<ILike> {
 
     async likePost(req: Request, res: Response) {
         const postId = req.body.postId;
+        const ownerId = req.params.userId; // Extract user ID from JWT token
     
         try {
             // Check if the post exists
             const postExists = await postModel.findById(postId);
             if (!postExists) {
                 return res.status(404).json({ message: "Post not found" });
-            } else {
-                // Add the like
-                await super.create(req, res);
             }
-           
+
+            // Check if the like already exists
+            const existingLike = await likeModel.findOne({ postId, ownerId });
+            if (existingLike) {
+                return res.status(400).json({ message: "You have already liked this post" });
+            }
+
+            // Add the like
+            await super.create(req, res)
+            return res.status(201).json({ message: "Post liked successfully" });
         } catch (error) {
             res.status(400).json({ error: error.message });
         }
     }
-    
 
     async unlikePost(req: authenticatedRequest, res: Response) {
         const postId = req.params.postId;
+        const ownerId = req.params.userId; // ID of the logged-in user
     
         try {
-            const ownerId = req.params.userId; // ID of the logged-in user
+            // Find the like entry
+            const like = await likeModel.findOneAndDelete({ postId, ownerId });
 
-            // Delete like
-            await likeModel.findOneAndDelete({ ownerId, postId });
-        } catch (err) {
-            if (err.message === "Item Not Found") {
-                res.status(404).json({ error: "Like Not Found" });
-            } else {
-                res.status(500).json({ error: err.message });
+            if (!like) {
+                return res.status(404).json({ message: "You haven't liked this post yet" });
             }
+
+            return res.status(200).json({ message: "Like removed successfully" });
+        } catch (err) {
+            res.status(500).json({ error: err.message });
         }
     }
-    
 }
 
 export default new LikesController();
