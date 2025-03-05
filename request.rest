@@ -137,6 +137,5 @@ Content-Type: application/json
 }
 
 ### Delete like
-
-DELETE http://localhost:3000/likes/67c858bae9dfcce84f3238d3
+DELETE http://localhost:3000/likes/67c855a3fc765b5e940058b3
 Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M3MzJlMGI0MmExMjQyOTM5ZTUyN2EiLCJyYW5kb20iOiIwLjc1OTc1OTY3NjUxODE3NzEiLCJpYXQiOjE3NDExODI2MTEsImV4cCI6MTc0MTc4NzQxMX0.1ymJ1NFWyBMYo6mnUA944oluwJ5nB6UU32lQCPmWvs8

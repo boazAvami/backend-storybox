@@ -158,6 +158,6 @@ likesRouter.post("/", authMiddleware, likesController.likePost.bind(likesControl
  *       500:
  *         description: Internal server error
  */
-likesRouter.delete("/:id", authMiddleware, likesController.unlikePost.bind(likesController));
+likesRouter.delete("/:postId", authMiddleware, likesController.unlikePost.bind(likesController));
 
 export default likesRouter;

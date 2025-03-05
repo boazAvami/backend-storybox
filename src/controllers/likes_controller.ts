@@ -46,15 +46,13 @@ class LikesController extends BaseController<ILike> {
     
 
     async unlikePost(req: authenticatedRequest, res: Response) {
-        const likeId = req.params.id;
+        const postId = req.params.postId;
     
         try {
-            // Find like
-            const like = await super.getByIdInternal(likeId);
-            const likeOwnerId = like.ownerId.toString();
-    
+            const ownerId = req.params.userId; // ID of the logged-in user
+
             // Delete like
-            await super.delete(req, res, likeOwnerId);
+            await likeModel.findOneAndDelete({ ownerId, postId });
         } catch (err) {
             if (err.message === "Item Not Found") {
                 res.status(404).json({ error: "Like Not Found" });
