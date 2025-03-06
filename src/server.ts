@@ -9,6 +9,7 @@ import { authRouter } from './routes/auth_route';
 import { usersRouter } from './routes/users_route';
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
+import { conversationsRouter } from './routes/conversations_router';
 import { genresRouter } from './routes/genres_route';
 import { filesRouter } from './routes/files_route';
 
@@ -30,6 +31,7 @@ app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 app.use('/users', usersRouter);
+app.use('/conversations', conversationsRouter);
 
 app.use("/public", express.static("public"));
 app.use('/files', filesRouter);
