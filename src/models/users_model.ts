@@ -14,7 +14,6 @@ export interface IUser {
   date_joined?: Date | null;
   profile_picture_uri?: string;
   is_connected?: boolean;
-  provider?: string | null;
   gender?: string | null;
   refreshToken?: string[];
 }
@@ -57,10 +56,6 @@ const userSchema = new mongoose.Schema<IUser>({
   is_connected: {
     type: Boolean,
     default: true,
-  },
-  provider: { 
-    type: String, 
-    // required: true 
   },
   gender: {
     type: String,
