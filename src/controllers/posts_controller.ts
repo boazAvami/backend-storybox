@@ -23,7 +23,7 @@ class PostsController extends BaseController<IPost> {
         } catch (error) {
             res.status(400).send(error.message);
         }
-    }
+    };
 
     async update(req: authenticatedRequest, res: Response) {
             const postId = req.params.id;
@@ -40,7 +40,7 @@ class PostsController extends BaseController<IPost> {
                     res.status(500).json({ error: err.message });
                 }
             }
-        };
+    };
 }
 
 export default new PostsController();

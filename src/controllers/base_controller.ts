@@ -87,7 +87,7 @@ abstract class BaseController<T> {
             if (authenticatedUserId !== ownerId){
                 res.status(403).send('Forbbiden');
             } else {
-                const deletedItem = await this.model.findByIdAndDelete(req.params.id);
+                const deletedItem = await this.model.findOneAndDelete({_id: req.params.id});
 
                 if (!deletedItem) res.status(404).json({ message: 'Not found' });
                 res.status(200).json({_id: deletedItem._id});
