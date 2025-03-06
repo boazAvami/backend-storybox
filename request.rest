@@ -78,6 +78,7 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
+
   "userName": "yaelii",
   "email": "yaelii@gmail",
   "password": "123"
@@ -135,6 +136,22 @@ Content-Type: application/json
   "password": "ssss"
 }
 
+
+
+### Create like
+POST http://localhost:3000/likes
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M3MzJlMGI0MmExMjQyOTM5ZTUyN2EiLCJyYW5kb20iOiIwLjc1OTc1OTY3NjUxODE3NzEiLCJpYXQiOjE3NDExODI2MTEsImV4cCI6MTc0MTc4NzQxMX0.1ymJ1NFWyBMYo6mnUA944oluwJ5nB6UU32lQCPmWvs8
+Content-Type: application/json
+
+{
+  "postId": "67c855a3fc765b5e940058b3"
+}
+
+### Delete like
+DELETE http://localhost:3000/likes/67c855a3fc765b5e940058b3
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M3MzJlMGI0MmExMjQyOTM5ZTUyN2EiLCJyYW5kb20iOiIwLjc1OTc1OTY3NjUxODE3NzEiLCJpYXQiOjE3NDExODI2MTEsImV4cCI6MTc0MTc4NzQxMX0.1ymJ1NFWyBMYo6mnUA944oluwJ5nB6UU32lQCPmWvs8
+
+
 ### Google Register
 
 POST http://localhost:3000/auth/google
@@ -143,3 +160,4 @@ Content-Type: application/json
 {
   "credential": "mock_google_token"
 }
+
