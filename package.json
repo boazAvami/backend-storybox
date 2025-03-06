@@ -9,7 +9,9 @@
     "deploy": "npm run build && pm2 start dist/app.js --name StoryBox-Server --watch",
     "build": "tsc",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "prod": "tsc -p tsconfig_prod.json && node ./dist/app.js",
+    "prod1": "cp .envprod .env && tsc -p tsconfig_prod.json && node ./dist/app.js"
   },
   "repository": {
     "type": "git",

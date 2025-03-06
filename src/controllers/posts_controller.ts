@@ -26,20 +26,20 @@ class PostsController extends BaseController<IPost> {
     };
 
     async update(req: authenticatedRequest, res: Response) {
-            const postId = req.params.id;
-            try {
-                const post = await super.getByIdInternal(postId)
-                const postOwnerId = post.ownerId.toString()
+        const postId = req.params.id;
+        try {
+            const post = await super.getByIdInternal(postId)
+            const postOwnerId = post.ownerId.toString()
                 
-                await super.update(req, res, postOwnerId);
+            await super.update(req, res, postOwnerId);
                 
-            } catch (err) {
-                if (err.message === 'Item Not Found') {
-                    res.status(404).json({error: 'Post Not Found'})
-                } else {
-                    res.status(500).json({ error: err.message });
-                }
+        } catch (err) {
+            if (err.message === 'Item Not Found') {
+                res.status(404).json({error: 'Post Not Found'})
+            } else {
+                res.status(500).json({ error: err.message });
             }
+        }
     };
 }
 

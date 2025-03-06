@@ -8,12 +8,10 @@ import { OAuth2Client } from 'google-auth-library';
 export const hashPassword = async(password: string) => {
     try {
         const salt = await bcrypt.genSalt(10);
-        
         return await bcrypt.hash(password, salt);
     } catch {
         throw new Error('Error With Hash Password');
     }
-    
 }
 
 export const register = async (req: Request, res: Response) => {
@@ -24,12 +22,12 @@ export const register = async (req: Request, res: Response) => {
             email,
             password: hashedPassword,
             userName: userName,
-            firstName: firstName ? firstName : null,
-            lastName: lastName ? lastName : null,
-            phone_number: phone_number ? phone_number : null,
-            date_of_birth: date_of_birth ? date_of_birth : null,
-            profile_picture_uri: profile_picture_uri ? profile_picture_uri : null,
-            gender: gender ? gender : null,
+            firstName: firstName ?? null,
+            lastName: lastName ?? null,
+            phone_number: phone_number ?? null,
+            date_of_birth: date_of_birth ?? null,
+            profile_picture_uri: profile_picture_uri ?? null,
+            gender: gender ?? null,
         });
         res.status(200).send(user);
     } catch (err) {
