@@ -1,5 +1,5 @@
 import express from 'express';
-import { login, logout, refreshToken, register } from "../controllers/auth_controller";
+import { login, logout, refreshToken, register, googleSignin} from "../controllers/auth_controller";
 
 export const authRouter = express.Router();
 
@@ -76,6 +76,7 @@ export const authRouter = express.Router();
  *                 _id: "adfasdfasdfasdfsd"
  */
 authRouter.post('/register', register);
+authRouter.post("/google", googleSignin);
 
 /**
  * @swagger

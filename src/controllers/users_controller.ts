@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import {userModel, IUser} from "../models/users_model";
 import BaseController from "./base_controller";
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 import { authenticatedRequest } from "./base_controller";
 import { hashPassword } from "./auth_controller";
 
@@ -19,31 +19,31 @@ class UsersController extends BaseController<IUser> {
         }
     }
 
-        async delete(req: authenticatedRequest, res: Response) {
-            try {
-                const userId = req.params.id // User id
-                await super.delete(req, res, userId);
-            } catch (err) {
-                if (!res.headersSent) {
-                    res.status(500).json({ error: err.message });
-                }
-            }
-        };
-
-        async update(req: authenticatedRequest, res: Response) {
-            try {
-                const userId = req.params.id // User id
-
-                // Check if the password is being updated
-                if (req.body.password) {
-                    req.body.password = await hashPassword(req.body.password);
-                }
-
-                await super.update(req, res, userId);
-            } catch (err) {
+    async delete(req: authenticatedRequest, res: Response) {
+        try {
+            const userId = req.params.id // User id
+            await super.delete(req, res, userId);
+        } catch (err) {
+            if (!res.headersSent) {
                 res.status(500).json({ error: err.message });
             }
-        };
+        }
+    };
+
+    async update(req: authenticatedRequest, res: Response) {
+        try {
+            const userId = req.params.id // User id
+
+            // Check if the password is being updated
+            if (req.body.password) {
+                req.body.password = await hashPassword(req.body.password);
+            }
+
+            await super.update(req, res, userId);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    };
 }
 
 export default new UsersController();

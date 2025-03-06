@@ -19,9 +19,8 @@ const testUser: User = {
 }
 
 const testPost: Post = {
-    title: postsMock[0].title,
     _id: "",
-    ownerId: "",
+    ownerId: new mongoose.Types.ObjectId(),
     content: postsMock[0].content
 }
 
@@ -43,7 +42,6 @@ beforeAll(async () => {
 
     // Create a post required for the comment
     const portResponse = await request(app).post("/posts").send({
-        title: postsMock[0].title,
         content: postsMock[0].content
     }).set(
         { authorization: "JWT " + testUser.accessToken }
