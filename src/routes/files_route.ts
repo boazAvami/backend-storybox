@@ -2,7 +2,6 @@ import express from "express";
 export const filesRouter = express.Router();
 import multer from "multer";
 
-
 const base = "http://" + process.env.DOMAIN_BASE + ":" + process.env.PORT + "/";
 
 const storage = multer.diskStorage({

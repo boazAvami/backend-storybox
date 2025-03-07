@@ -43,8 +43,8 @@ class LikesController extends BaseController<ILike> {
                 return res.status(400).json({ message: "You have already liked this post" });
             }
 
-            // Add the like
             await super.create(req, res)
+            await postModel.findByIdAndUpdate(postId, { $inc: { like_count: 1 } });
             return res.status(201).json({ message: "Post liked successfully" });
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -62,7 +62,7 @@ class LikesController extends BaseController<ILike> {
             if (!like) {
                 return res.status(404).json({ message: "You haven't liked this post yet" });
             }
-
+            await postModel.findByIdAndUpdate(postId, { $inc: { like_count: -1 } });
             return res.status(200).json({ message: "Like removed successfully" });
         } catch (err) {
             res.status(500).json({ error: err.message });
