@@ -4,14 +4,13 @@
   "description": "",
   "main": "src/app.ts",
   "scripts": {
-    "start": "nodemon ./src/app.ts",
+    "start:dev": "nodemon ./src/app.ts",
     "test": "jest --coverage --detectOpenHandles --forceExit google.auth.test.ts",
-    "deploy": "npm run build && pm2 start dist/app.js --name StoryBox-Server --watch",
-    "build": "tsc",
+    "deploy": "npm run build:prod && pm2 start dist/app.js --name StoryBox-Server --watch",
+    "build:dev": "tsc",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prod": "tsc -p tsconfig_prod.json && node ./dist/app.js",
-    "prod1": "cp .envprod .env && tsc -p tsconfig_prod.json && node ./dist/app.js"
+    "build:prod": "cp .envprod .env && tsc -p tsconfig_prod.json"
   },
   "repository": {
     "type": "git",
