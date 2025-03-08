@@ -250,3 +250,4 @@ postsRouter.post("/", authMiddleware, postsController.create.bind(postsControlle
  */
 postsRouter.put('/:id', authMiddleware, postsController.update.bind(postsController));
 
+postsRouter.delete('/:id', authMiddleware, postsController.delete.bind(postsController));
