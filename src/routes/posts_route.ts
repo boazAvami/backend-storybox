@@ -1,5 +1,5 @@
 import express from 'express';
-import postsController from "../controllers/posts_controller";
+import postsController, { getPosts } from "../controllers/posts_controller";
 import { authMiddleware } from '../controllers/auth_controller';
 
 export const postsRouter = express.Router();
@@ -99,6 +99,8 @@ export const postsRouter = express.Router();
  *                   example: Error message explaining the failure
  */
 postsRouter.get('/', authMiddleware, postsController.getAll.bind(postsController));
+
+postsRouter.get("/paging", getPosts); // Route for paginated posts
 
 /**
  * @swagger

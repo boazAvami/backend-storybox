@@ -43,4 +43,30 @@ class PostsController extends BaseController<IPost> {
     };
 }
 
+export const getPosts = async (req: Request, res: Response) => {
+    try {
+        console.log("heres")
+        const page = parseInt(req.query.page as string) || 1; // Get page number from query
+        const limit = 10; // Number of posts per page
+        const skip = (page - 1) * limit; // Calculate how many to skip
+
+        console.log(`Fetching posts - Page: ${page}, Limit: ${limit}, Skip: ${skip}`);
+
+        const posts = await postModel.find().sort({ createdAt: -1, _id: -1 }).skip(skip).limit(limit); // Get paginated posts
+        const totalPosts = await postModel.countDocuments(); // Count total posts
+
+        // Count total posts for pagination
+        console.log(`Retrieved ${posts.length} posts (out of ${totalPosts})`);
+
+        res.status(200).json({
+            posts,
+            currentPage: page,
+            totalPages: Math.ceil(totalPosts / limit),
+        });
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+        res.status(500).json({ message: "Something went wrong with get posts." });
+    }
+};
+
 export default new PostsController();
