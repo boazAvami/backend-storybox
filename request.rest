@@ -19,11 +19,11 @@ Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NjODQ4NWY1
 
 ### Create Post
 POST http://localhost:3000/posts
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NjODQ4NWY1ZDU0NjcwNDI3ODQyYzUiLCJyYW5kb20iOiIwLjc2MDI5NzQ2MjU0MDMyMzgiLCJpYXQiOjE3NDE0NTY1MjQsImV4cCI6MTc0MjA2MTMyNH0.8yuKXTWS8OpROk6YMYsmZTpLPpkSs0ecOpf9tUHeUlA
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NmMGYyNDQxODYxNGM4NDljOTc0MzEiLCJyYW5kb20iOiIwLjM2ODI0NTk1MzA1MTE1NTA0IiwiaWF0IjoxNzQxNjIzMDg0LCJleHAiOjE3NDIyMjc4ODR9.pl8l-qzcCrLeYpxTPEmX32j9y8rWBJbe6ussDXvkisk
 Content-Type: application/json
 
 {
-"content": "one to update"
+"content": "The night recedes as I prepare to journey toward dawn, towarddreamscapes of memory. Flashes of light across time and place illuminating a run to the ocean and the sound of waves crashing and the tidal repetition of my name being called. Here, before the sound of people racing to an uncertain life, I hear moments in the darkness before the eastern glow lightens dark blue and then finally light blue and the sky and morning star confirm that up until this moment this life has not been a dream and it was true that I’ve seen blossoms fall gently from cherry trees at the slightest change in the sacred wind frozen in time counting the cadence of my footsteps on the graveled path and the sound of my sacred breath, my prayer that other darker memories remain hidden in the night of my soul to be discovered when the morning whispers to me Now you can journey inward to find the child who cowers in fear from lightning and thunder and belts and closed fists"
 }
 
 ### Update Post
@@ -83,9 +83,8 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-
-  "userName": "shir",
-  "email": "shir@gmail",
+  "userName": "yaeli",
+  "email": "yaeli@gmail",
   "password": "123"
 }
 
@@ -102,11 +101,11 @@ Content-Type: application/json
 ### Logout
 
 POST http://localhost:3000/auth/logout
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M4MTA2ZTkyNWZiNmNmZTA5ZTM0YWMiLCJyYW5kb20iOiIwLjA4ODczMDk3MTM0MTM3NzA5IiwiaWF0IjoxNzQxMTY2NjEwLCJleHAiOjE3NDE3NzE0MTB9.ZPA5LEUSakIQ-vGA-HfCnPqrNUGPOL3nsQd27X5_r0M
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NkODFhYmIzZDY4NmNkZWYxYzhhZTYiLCJyYW5kb20iOiIwLjQyNDY2Nzk5ODI0NzIzMjM0IiwiaWF0IjoxNzQxNTQ1NzExLCJleHAiOjE3NDIxNTA1MTF9.OW4rXqzb-S_r3G1kjI5_PEEwGZSHCOdasbJ3m73dpow
 Content-Type: application/json
 
 {
-  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M4MTA2ZTkyNWZiNmNmZTA5ZTM0YWMiLCJyYW5kb20iOiIwLjA4ODczMDk3MTM0MTM3NzA5IiwiaWF0IjoxNzQxMTY2NjEwLCJleHAiOjE3NDE3NzE0MTB9.ktClox0d0bcHLUJaMLmNsdb5ox7JisrGlyLCzqtL4_A"
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NkODFhYmIzZDY4NmNkZWYxYzhhZTYiLCJyYW5kb20iOiIwLjQyNDY2Nzk5ODI0NzIzMjM0IiwiaWF0IjoxNzQxNTQ1NzExLCJleHAiOjE3NDIxNTA1MTF9.LrO9zZ7j5PxgNv-wEdpjlS-Z5gtMg2MzkgTD2onxrqI"
 }
 
 
@@ -166,3 +165,11 @@ Content-Type: application/json
   "credential": "mock_google_token"
 }
 
+### Get First Page of Posts (10 per page)
+GET http://localhost:3000/posts/paging?page=2
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NmMGYyNDQxODYxNGM4NDljOTc0MzEiLCJyYW5kb20iOiIwLjE2NDQxNjAzOTQ3NjQ3MTU0IiwiaWF0IjoxNzQxNjIzMTYzLCJleHAiOjE3NDIyMjc5NjN9.lJF-5WRV41hf0xV3UcKKbHvxyyO5lFS_u8bWjRVTdjo
+
+
+### Get Second Page of Posts
+GET http://localhost:3000/posts/paging?sender=67cd81abb3d686cdef1c8ae6&page=4
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NmMGYyNDQxODYxNGM4NDljOTc0MzEiLCJyYW5kb20iOiIwLjE2NDQxNjAzOTQ3NjQ3MTU0IiwiaWF0IjoxNzQxNjIzMTYzLCJleHAiOjE3NDIyMjc5NjN9.lJF-5WRV41hf0xV3UcKKbHvxyyO5lFS_u8bWjRVTdjo

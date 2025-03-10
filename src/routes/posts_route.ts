@@ -102,6 +102,56 @@ postsRouter.get('/', authMiddleware, postsController.getAll.bind(postsController
 
 /**
  * @swagger
+ * /posts/paging:
+ *   get:
+ *     summary: Retrieves paginated posts with an optional sender filter.
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: page
+ *         in: query
+ *         required: false
+ *         description: The page number to retrieve (defaults to 1).
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *       - name: sender
+ *         in: query
+ *         required: false
+ *         description: The ID of the user who created the posts (filters results by sender).
+ *         schema:
+ *           type: string
+ *           example: "60d9c1ef6c6c2b001c8e4a72"
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved paginated posts.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 posts:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Post'
+ *                 currentPage:
+ *                   type: integer
+ *                   description: The current page number.
+ *                   example: 1
+ *                 totalPages:
+ *                   type: integer
+ *                   description: The total number of pages.
+ *                   example: 5
+ *       400:
+ *         description: Invalid request parameters.
+ *       500:
+ *         description: Internal server error.
+ */
+postsRouter.get("/paging", authMiddleware, postsController.getPosts.bind(postsController)); // Route for paginated posts
+
+/**
+ * @swagger
  * /posts/{postId}:
  *   get:
  *     summary: Retrieves a single post by its ID
@@ -203,6 +253,7 @@ postsRouter.get('/:id', authMiddleware, postsController.getById.bind(postsContro
  *                   example: "Unauthorized"
  */
 postsRouter.post("/", authMiddleware, postsController.create.bind(postsController));
+
 /**
  * @swagger
  * /posts/{id}:

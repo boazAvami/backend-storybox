@@ -257,60 +257,52 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 };
 
 export const client = new OAuth2Client();
-export const googleSignin = async (req: Request, res: Response) => {
-    console.log("Received body:", req.body);
-    
+export const googleSignin = async (req: Request, res: Response) => {    
     try {
         if (!req.body.credential) {
             res.status(400).send("Missing credential in request");
-        }
-
-        const ticket = await client.verifyIdToken({
-        idToken: req.body.credential,
-        audience: process.env.GOOGLE_CLIENT_ID,
-        });
-
-        const payload = ticket.getPayload();
-        if (!payload || !payload.email) {
-            console.log("No email received from Google");
-            res.status(400).send("Invalid Google token: Missing email");
-        }
-
-        const email = payload?.email;
-        console.log("Google Payload:", payload);
+        } else {
+            const ticket = await client.verifyIdToken({
+                idToken: req.body.credential,
+                audience: process.env.GOOGLE_CLIENT_ID,
+                });
         
-        if (email != null) {
-        let user = await userModel.findOne({ email: email });
-        
-        if (user == null || !user) {
-            console.log("Creating new user...");
-
-            user = await userModel.create({
-            email: email,
-            userName: payload.email.split('@')[0],
-            password: "google-signin",
-            profile_picture_uri: payload?.picture ? payload?.picture : null,
-            });
-        }
-        
-        const tokens = await generateToken(user._id);
-        console.log("Successfully signed in with Google:", { email: user.email, _id: user._id });
-
-        console.log("Sending Response:", {
-            email: user.email,
-            _id: user._id,
-            profile_picture_uri: user.profile_picture_uri,
-            ...tokens,
-        });
-
-        res.status(200).send({
-            email: user.email,
-            _id: user._id,
-            profile_picture_uri: user.profile_picture_uri,
-            ...tokens,
-        });
+                const payload = ticket.getPayload();
+                if (!payload || !payload.email) {
+                    console.log("No email received from Google");
+                    res.status(400).send("Invalid Google token: Missing email");
+                } else {
+                    const email = payload?.email;
+                    console.log("Google Payload:", payload);
+                    
+                    if (email != null) {
+                        let user = await userModel.findOne({ email: email });
+                        
+                        if (user == null || !user) {
+                            console.log("Creating new user...");
+            
+                            user = await userModel.create({
+                            email: email,
+                            userName: payload.email.split('@')[0],
+                            password: "google-signin",
+                            profile_picture_uri: payload?.picture ? payload?.picture : null,
+                            });
+                        }
+                        
+                        const tokens = await generateToken(user._id);
+                        console.log("Successfully signed in with Google:", { email: user.email, _id: user._id });
+            
+                        res.status(200).send({
+                            email: user.email,
+                            _id: user._id,
+                            profile_picture_uri: user.profile_picture_uri,
+                            ...tokens,
+                        });
+                    }
+                }
         }
     } catch {
+        // console.error("Google Sign-In Error:");
         res.status(500).send("Server Error");
     }
 };

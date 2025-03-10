@@ -101,4 +101,50 @@ describe("Posts Tests", () => {
         );
         expect(response.statusCode).toBe(200);
     });
+
+    describe("GET /posts/paging - Pagination and Filtering Tests", () => {
+        test("Test get paginated posts - page 1", async () => {
+            const response = await request(app)
+                .get("/posts/paging?page=1")
+                .set({ authorization: "JWT " + testUser.accessToken });
+
+            expect(response.statusCode).toBe(200);
+            expect(response.body).toHaveProperty("posts");
+            expect(response.body).toHaveProperty("currentPage", 1);
+            expect(response.body).toHaveProperty("totalPages");
+        });
+
+        test("Test get paginated posts with sender filter", async () => {
+            const response = await request(app)
+                .get(`/posts/paging?page=1&sender=${testUser._id}`)
+                .set({ authorization: "JWT " + testUser.accessToken });
+
+            expect(response.statusCode).toBe(200);
+            expect(response.body).toHaveProperty("posts");
+            expect(response.body.posts.length).toBeGreaterThanOrEqual(0);
+        });
+
+        test("Test get paginated posts with invalid page", async () => {
+            const response = await request(app)
+                .get("/posts/paging?page=-1")
+                .set({ authorization: "JWT " + testUser.accessToken });
+
+            expect(response.statusCode).toBe(500);
+        });
+
+        test("Test get paginated posts with non-existent sender", async () => {
+            const response = await request(app)
+                .get("/posts/paging?page=1&sender=60d9c1ef6c6c2b001c8e4a99") // Fake ID
+                .set({ authorization: "JWT " + testUser.accessToken });
+
+            expect(response.statusCode).toBe(200);
+            expect(response.body.posts.length).toBe(0); // Should return empty
+        });
+
+        test("Test get paginated posts - missing JWT token", async () => {
+            const response = await request(app).get("/posts/paging?page=1");
+
+            expect(response.statusCode).toBe(401);
+        });
+    });
 });

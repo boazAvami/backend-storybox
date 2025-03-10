@@ -591,6 +591,31 @@ describe("Auth Tests", () => {
             ).send(commentsMock[0]);
     
             expect(response.statusCode).toBe(401);
-        });
+    });   
 
+    describe("Google Sign-In Tests", () => {
+             
+        test("Google Sign-In fails when credential is missing", async () => {
+          const response = await request(app).post("/auth/google").send({});
+      
+          expect(response.statusCode).toBe(400);
+          expect(response.text).toBe("Missing credential in request");
+        });
+      
+
+        test("Google Sign-In fails when an unexpected error occurs", async () => {
+          jest.spyOn(AuthController, "googleSignin").mockImplementation(() => {
+            throw new Error("Unexpected Error");
+          });
+      
+          const response = await request(app).post("/auth/google").send({
+            credential: "mock-google-token",
+          });
+      
+          expect(response.statusCode).toBe(500);
+          expect(response.text).toBe("Server Error");
+      
+          jest.restoreAllMocks();
+        });
+      });
 });
