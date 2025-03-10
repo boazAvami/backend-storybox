@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { IUser, userModel } from '../models/users_model';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { OAuth2Client } from 'google-auth-library';
 
 export const hashPassword = async(password: string) => {
@@ -22,16 +23,43 @@ export const register = async (req: Request, res: Response) => {
             email,
             password: hashedPassword,
             userName: userName,
-            firstName: firstName ?? null,
-            lastName: lastName ?? null,
-            phone_number: phone_number ?? null,
-            date_of_birth: date_of_birth ?? null,
-            profile_picture_uri: profile_picture_uri ?? null,
-            gender: gender ?? null,
+            firstName: firstName ? firstName : null,
+            lastName: lastName ? lastName : null,
+            phone_number: phone_number ? phone_number : null,
+            date_of_birth: date_of_birth ? date_of_birth : null,
+            profile_picture_uri: profile_picture_uri ? profile_picture_uri : null,
+            gender: gender ? gender : null,
         });
-        res.status(200).send(user);
-    } catch (err) {
-        res.status(400).send(err);
+        res.status(201).send(user);
+    } catch (err: unknown) {
+        // Handle duplicate key error (MongoDB unique constraint)
+        if (typeof err === "object" && err !== null && "code" in err && (err as any).code === 11000) {
+            const field = Object.keys((err as any).keyPattern)[0];
+
+            // Mapping MongoDB field names to human-friendly labels
+            const fieldLabels: Record<string, string> = {
+                userName: "User Name",
+                email: "Email",
+                phone_number: "Phone Number",
+                firstName: "First Name",
+                lastName: "Last Name",
+            };
+
+            const prettyField = fieldLabels[field] || field; // Default to field name if not mapped
+
+            res.status(400).json({ message: `${prettyField} already exists` });
+            return; 
+        }
+
+        // Handle Mongoose validation errors
+        if (err instanceof mongoose.Error.ValidationError) {
+            const errors = Object.values(err.errors).map((e) => (e as mongoose.Error.ValidatorError).message);
+            res.status(400).json({ message: errors.join(", ") });
+            return;
+        }
+
+        // Handle unexpected errors
+        res.status(500).json({ message: "Something went wrong. Please try again later." });
     }
 };
 

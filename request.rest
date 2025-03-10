@@ -2,15 +2,20 @@
 
 ### Get All posts
 GET http://localhost:3000/posts
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M1YzI0NzEzZDNiZWMwODA3ZTQ4M2IiLCJyYW5kb20iOiIwLjMyNzM0MjMxODMyNTExNDA3IiwiaWF0IjoxNzQxMDE2NjkwLCJleHAiOjE3NDE2MjE0OTB9.H4CgkF12Jx9GmN-5l1SUG-UeVtpuzTACuEnTIgcBhos
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NjODQ4NWY1ZDU0NjcwNDI3ODQyYzUiLCJyYW5kb20iOiIwLjc2MDI5NzQ2MjU0MDMyMzgiLCJpYXQiOjE3NDE0NTY1MjQsImV4cCI6MTc0MjA2MTMyNH0.8yuKXTWS8OpROk6YMYsmZTpLPpkSs0ecOpf9tUHeUlA
 
 ### Get Post By Id
-GET http://localhost:3000/posts/678f76824804fbb8a1bb826b
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M1YzI0NzEzZDNiZWMwODA3ZTQ4M2IiLCJyYW5kb20iOiIwLjMyNzM0MjMxODMyNTExNDA3IiwiaWF0IjoxNzQxMDE2NjkwLCJleHAiOjE3NDE2MjE0OTB9.H4CgkF12Jx9GmN-5l1SUG-UeVtpuzTACuEnTIgcBhos
+GET http://localhost:3000/posts/67cc86e8d5e638008887cf8f
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NjODQ4NWY1ZDU0NjcwNDI3ODQyYzUiLCJyYW5kb20iOiIwLjc2MDI5NzQ2MjU0MDMyMzgiLCJpYXQiOjE3NDE0NTY1MjQsImV4cCI6MTc0MjA2MTMyNH0.8yuKXTWS8OpROk6YMYsmZTpLPpkSs0ecOpf9tUHeUlA
 
 ### Get Posts By Sender
-GET http://localhost:3000/posts?sender=678f76824804fbb8a1bb8266
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M1YzI0NzEzZDNiZWMwODA3ZTQ4M2IiLCJyYW5kb20iOiIwLjMyNzM0MjMxODMyNTExNDA3IiwiaWF0IjoxNzQxMDE2NjkwLCJleHAiOjE3NDE2MjE0OTB9.H4CgkF12Jx9GmN-5l1SUG-UeVtpuzTACuEnTIgcBhos
+GET http://localhost:3000/posts?sender=67cc8485f5d54670427842c5
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NjODQ4NWY1ZDU0NjcwNDI3ODQyYzUiLCJyYW5kb20iOiIwLjc2MDI5NzQ2MjU0MDMyMzgiLCJpYXQiOjE3NDE0NTY1MjQsImV4cCI6MTc0MjA2MTMyNH0.8yuKXTWS8OpROk6YMYsmZTpLPpkSs0ecOpf9tUHeUlA
+
+
+### DELETE post
+DELETE http://localhost:3000/posts/67cc86e8d5e638008887cf8f
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NjODQ4NWY1ZDU0NjcwNDI3ODQyYzUiLCJyYW5kb20iOiIwLjc2MDI5NzQ2MjU0MDMyMzgiLCJpYXQiOjE3NDE0NTY1MjQsImV4cCI6MTc0MjA2MTMyNH0.8yuKXTWS8OpROk6YMYsmZTpLPpkSs0ecOpf9tUHeUlA
 
 ### Create Post
 POST http://localhost:3000/posts
@@ -22,12 +27,12 @@ Content-Type: application/json
 }
 
 ### Update Post
-PUT http://localhost:3000/posts/67c5cf12686af915f4ca5ee0
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M1YzI0NzEzZDNiZWMwODA3ZTQ4M2IiLCJyYW5kb20iOiIwLjMyNzM0MjMxODMyNTExNDA3IiwiaWF0IjoxNzQxMDE2NjkwLCJleHAiOjE3NDE2MjE0OTB9.H4CgkF12Jx9GmN-5l1SUG-UeVtpuzTACuEnTIgcBhos
+PUT http://localhost:3000/posts/67cc84d1f5d54670427842c9
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NjODQ4NWY1ZDU0NjcwNDI3ODQyYzUiLCJyYW5kb20iOiIwLjc2MDI5NzQ2MjU0MDMyMzgiLCJpYXQiOjE3NDE0NTY1MjQsImV4cCI6MTc0MjA2MTMyNH0.8yuKXTWS8OpROk6YMYsmZTpLPpkSs0ecOpf9tUHeUlA
 Content-Type: application/json
 
 {
-  "content": "Hello World..."
+  "content": "post liked update"
 }
 
 
@@ -78,7 +83,6 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-
   "userName": "yaeli",
   "email": "yaeli@gmail",
   "password": "123"
@@ -90,7 +94,7 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "yaeli@gmail",
+  "email": "shir@gmail",
   "password": "123"
 }
 
@@ -140,16 +144,16 @@ Content-Type: application/json
 
 ### Create like
 POST http://localhost:3000/likes
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M3MzJlMGI0MmExMjQyOTM5ZTUyN2EiLCJyYW5kb20iOiIwLjc1OTc1OTY3NjUxODE3NzEiLCJpYXQiOjE3NDExODI2MTEsImV4cCI6MTc0MTc4NzQxMX0.1ymJ1NFWyBMYo6mnUA944oluwJ5nB6UU32lQCPmWvs8
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NjODQ4NWY1ZDU0NjcwNDI3ODQyYzUiLCJyYW5kb20iOiIwLjc2MDI5NzQ2MjU0MDMyMzgiLCJpYXQiOjE3NDE0NTY1MjQsImV4cCI6MTc0MjA2MTMyNH0.8yuKXTWS8OpROk6YMYsmZTpLPpkSs0ecOpf9tUHeUlA
 Content-Type: application/json
 
 {
-  "postId": "67c855a3fc765b5e940058b3"
+  "postId": "67cc84d1f5d54670427842c9"
 }
 
 ### Delete like
-DELETE http://localhost:3000/likes/67c855a3fc765b5e940058b3
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2M3MzJlMGI0MmExMjQyOTM5ZTUyN2EiLCJyYW5kb20iOiIwLjc1OTc1OTY3NjUxODE3NzEiLCJpYXQiOjE3NDExODI2MTEsImV4cCI6MTc0MTc4NzQxMX0.1ymJ1NFWyBMYo6mnUA944oluwJ5nB6UU32lQCPmWvs8
+DELETE http://localhost:3000/likes/67cc84d1f5d54670427842c9
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NjODQ4NWY1ZDU0NjcwNDI3ODQyYzUiLCJyYW5kb20iOiIwLjc2MDI5NzQ2MjU0MDMyMzgiLCJpYXQiOjE3NDE0NTY1MjQsImV4cCI6MTc0MjA2MTMyNH0.8yuKXTWS8OpROk6YMYsmZTpLPpkSs0ecOpf9tUHeUlA
 
 
 ### Google Register

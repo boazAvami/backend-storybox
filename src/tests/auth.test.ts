@@ -55,7 +55,7 @@ const testUser2: User = {
 describe("Auth Tests", () => {
     test("Test success Auth register", async () => {
         const response = await request(app).post(baseUrl + "/register").send(testUser);
-        expect(response.statusCode).toBe(200);
+        expect(response.statusCode).toBe(201);
     });
 
     test("Auth test register fail", async () => {
@@ -67,7 +67,7 @@ describe("Auth Tests", () => {
         const response = await request(app).post(baseUrl + "/register").send({
             email: "sdsdfsd",
         });
-        expect(response.statusCode).toBe(400);
+        expect(response.statusCode).toBe(500);
 
         const response2 = await request(app).post(baseUrl + "/register").send({
             email: "",
@@ -85,7 +85,7 @@ describe("Auth Tests", () => {
             password: "password123",
         });
     
-        expect(response.statusCode).toBe(400);
+        expect(response.statusCode).toBe(500);
         jest.restoreAllMocks();
     });
     
@@ -98,7 +98,7 @@ describe("Auth Tests", () => {
             password: "password123",
         });
     
-        expect(response.statusCode).toBe(400);
+        expect(response.statusCode).toBe(500);
         jest.restoreAllMocks();
     });
     

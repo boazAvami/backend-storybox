@@ -45,7 +45,6 @@ class LikesController extends BaseController<ILike> {
 
             await super.create(req, res)
             await postModel.findByIdAndUpdate(postId, { $inc: { like_count: 1 } });
-            return res.status(201).json({ message: "Post liked successfully" });
         } catch (error) {
             res.status(400).json({ error: error.message });
         }
@@ -66,6 +65,22 @@ class LikesController extends BaseController<ILike> {
             return res.status(200).json({ message: "Like removed successfully" });
         } catch (err) {
             res.status(500).json({ error: err.message });
+        }
+    }
+
+    async isLikedByMe(postId, ownerId) {
+        try {
+        
+            // Check if the like exists
+            const existingLike = await likeModel.findOne({ postId, ownerId });
+            if (existingLike) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (error) {
+            return false
         }
     }
 }
