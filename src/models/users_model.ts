@@ -59,7 +59,7 @@ const userSchema = new mongoose.Schema<IUser>({
   },
   gender: {
     type: String,
-    enum: ['male', 'female', 'other', null], // Restrict to valid gender values
+    enum: ['Male', 'Female', 'Other', null], // Restrict to valid gender values
     default: null,
   },
   email: {
