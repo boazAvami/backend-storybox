@@ -1,5 +1,5 @@
 import express from 'express';
-import postsController, { getPosts } from "../controllers/posts_controller";
+import postsController from "../controllers/posts_controller";
 import { authMiddleware } from '../controllers/auth_controller';
 
 export const postsRouter = express.Router();
@@ -100,7 +100,7 @@ export const postsRouter = express.Router();
  */
 postsRouter.get('/', authMiddleware, postsController.getAll.bind(postsController));
 
-postsRouter.get("/paging", getPosts); // Route for paginated posts
+postsRouter.get("/paging", authMiddleware, postsController.getPosts.bind(postsController)); // Route for paginated posts
 
 /**
  * @swagger
