@@ -10,20 +10,22 @@ class ConversationsController extends BaseController<IConversation> {
   // Create a new conversation
   async create(req: authenticatedRequest, res: Response): Promise<void> {
     try {
-      const { userId1, userId2 } = req.body;
+      const currUserId = req.params.userId
+      const { recipientId } = req.body;
 
-      if (!userId1 || !userId2) {
+      console.log("boazzzzzzz: " + currUserId + " vvvv  " + recipientId)
+      if (!currUserId || ! recipientId) {
         res.status(400).json({ error: "Both user IDs are required" });
         return;
       }
 
       let conversation = await conversationModel.findOne({
-        participants: { $all: [userId1, userId2] },
+        participants: { $all: [currUserId , recipientId] },
       });
 
       if (!conversation) {
         conversation = new conversationModel({
-          participants: [userId1, userId2],
+          participants: [currUserId, recipientId],
           messages: [],
         });
         await conversation.save();
@@ -90,6 +92,8 @@ class ConversationsController extends BaseController<IConversation> {
       res.status(500).json({ error: error.message });
     }
   }
+
+  
 }
 
 export default new ConversationsController();

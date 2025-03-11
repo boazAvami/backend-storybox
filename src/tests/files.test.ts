@@ -7,7 +7,7 @@ let app: Express;
 
 beforeAll(async () => {
   console.log("beforeAll");
-  app = await initApp();
+  app = (await initApp()).app;
 });
 
 afterAll((done) => {

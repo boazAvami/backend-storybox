@@ -11,7 +11,7 @@ let testUser2: any;
 let conversationId: string;
 
 beforeAll(async () => {
-    app = await initApp();
+    app = (await initApp()).app;
     await userModel.deleteMany();
     await conversationModel.deleteMany();
     
@@ -50,7 +50,7 @@ describe("Conversations API Tests", () => {
         const res = await request(app)
             .post("/conversations")
             .set("Authorization", `JWT ${testUser1.accessToken}`)
-            .send({ userId1: testUser1._id, userId2: testUser2._id });
+            .send({ recipientId: testUser2._id });
 
         expect(res.status).toBe(201);
         expect(res.body).toHaveProperty("_id");

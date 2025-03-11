@@ -7,7 +7,7 @@ import genresMock from "./genresMock.json";
 let app: Express;
 
 beforeAll(async () => {
-    app = await initApp();
+    app = (await initApp()).app;
 });
 
 afterAll((done) => {

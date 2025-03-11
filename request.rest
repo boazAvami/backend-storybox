@@ -94,14 +94,14 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "shir@gmail",
+  "email": "yaeli@gmail",
   "password": "123"
 }
 
 ### Logout
 
-POST http://localhost:3000/auth/logout
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2NkODFhYmIzZDY4NmNkZWYxYzhhZTYiLCJyYW5kb20iOiIwLjQyNDY2Nzk5ODI0NzIzMjM0IiwiaWF0IjoxNzQxNTQ1NzExLCJleHAiOjE3NDIxNTA1MTF9.OW4rXqzb-S_r3G1kjI5_PEEwGZSHCOdasbJ3m73dpow
+GET http://localhost:3000/users/me
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2QwYTM2MDAxYzcwNDFmN2JjMjBlNGEiLCJyYW5kb20iOiIwLjAwMDIwNTY3MzY5NTEyNTkxODYiLCJpYXQiOjE3NDE3MjY5MTUsImV4cCI6MTc0MjMzMTcxNX0.0KO5kFgOH73UNVFMS6nsXcC0x35BXiLJyHKy2jQ29zU"
 Content-Type: application/json
 
 {
