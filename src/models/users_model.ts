@@ -14,7 +14,7 @@ export interface IUser {
   date_joined?: Date | null;
   profile_picture_uri?: string;
   is_connected?: boolean;
-  gender?: string | null;
+  gender?: string;
   refreshToken?: string[];
 }
 
@@ -59,8 +59,8 @@ const userSchema = new mongoose.Schema<IUser>({
   },
   gender: {
     type: String,
-    enum: ['Male', 'Female', 'Other', null], // Restrict to valid gender values
-    default: null,
+    enum: ['Male', 'Female', 'Other', ''], // Restrict to valid gender values
+    default: '',
   },
   email: {
     type: String,
