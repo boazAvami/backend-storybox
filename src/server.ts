@@ -82,27 +82,27 @@ io.on("connection", (socket) => {
 
     socket.on("sendMessage", async ({ conversationId, senderId, text }) => {
         try {
-            const conversation = await conversationModel.findById(conversationId);
-            if (!conversation) {
-                socket.emit("error", "Conversation not found");
-                return;
-            }
-
-            const message = {
-                senderId,
-                text,
-                timestamp: new Date(),
-                isRead: false,
-            };
-
-            conversation.messages.push(message);
-            conversation.lastUpdated = new Date();
-            await conversation.save();
-
-            io.to(conversationId).emit("receiveMessage", message);
+          const conversation = await conversationModel.findById(conversationId);
+          if (!conversation) {
+            socket.emit("error", "Conversation not found");
+            return;
+          }
+      
+          const message = {
+            senderId,
+            text,
+            timestamp: new Date(),
+            isRead: false,
+          };
+      
+          conversation.messages.push(message);
+          conversation.lastUpdated = new Date();
+          await conversation.save();
+      
+          io.to(conversationId).emit("receiveMessage", message);
         } catch (error) {
-            console.error("Error sending message:", error);
-            socket.emit("error", "Failed to send message");
+          console.error("Error sending message:", error);
+          socket.emit("error", "Failed to send message");
         }
     });
 

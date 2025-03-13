@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { conversationModel, IConversation } from "../models/conversations_model";
 import BaseController, { authenticatedRequest } from "./base_controller";
+import { userModel } from "../models/users_model"; // Ensure User model is imported
 
 class ConversationsController extends BaseController<IConversation> {
   constructor() {
@@ -13,7 +14,6 @@ class ConversationsController extends BaseController<IConversation> {
       const currUserId = req.params.userId
       const { recipientId } = req.body;
 
-      console.log("boazzzzzzz: " + currUserId + " vvvv  " + recipientId)
       if (!currUserId || ! recipientId) {
         res.status(400).json({ error: "Both user IDs are required" });
         return;
@@ -37,20 +37,33 @@ class ConversationsController extends BaseController<IConversation> {
     }
   }
 
-  // Get all conversations for a user
   async getAll(req: authenticatedRequest, res: Response): Promise<void> {
     try {
-      const userId = req.query.userId as string;
+      const userId = req.params.userId;
       if (!userId) {
         res.status(400).json({ error: "User ID is required" });
         return;
       }
 
-      const conversations = await conversationModel.find({
-        participants: userId,
-      });
+      const conversations = await conversationModel
+        .find({ participants: userId })
+        .populate({
+          path: "participants",
+          select: "userName profile_picture_uri",
+        })
+        .sort({ lastUpdated: -1 });
 
-      res.status(200).json(conversations);
+      // Format response: include only latest message
+      const formattedConversations = conversations.map((conversation) => ({
+        _id: conversation._id,
+        participants: conversation.participants,
+        lastMessage: conversation.messages.length
+          ? conversation.messages[conversation.messages.length - 1]
+          : null,
+        lastUpdated: conversation.lastUpdated,
+      }));
+
+      res.status(200).json(formattedConversations);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -59,10 +72,21 @@ class ConversationsController extends BaseController<IConversation> {
   // Get a specific conversation by ID
   async getById(req: Request, res: Response): Promise<void> {
     try {
-      const conversation = await super.getByIdInternal(req.params.id);
+      const conversation = await conversationModel
+        .findById(req.params.id)
+        .populate({
+          path: "participants",
+          select: "userName profile_picture_uri",
+        });
+
+      if (!conversation) {
+        res.status(404).json({ error: "Conversation not found" });
+        return;
+      }
+
       res.status(200).json(conversation);
     } catch (error) {
-      res.status(404).json({ error: "Conversation not found" });
+      res.status(500).json({ error: error.message });
     }
   }
 
@@ -92,8 +116,23 @@ class ConversationsController extends BaseController<IConversation> {
       res.status(500).json({ error: error.message });
     }
   }
+  // DELETE: Remove a conversation by ID
+  async deleteConversation(req: Request, res: Response): Promise<void> {
+    try {
+      const { id: conversationId } = req.params;
+      
+      const deletedConversation = await conversationModel.findByIdAndDelete(conversationId);
 
-  
+      if (!deletedConversation) {
+        res.status(404).json({ error: "Conversation not found" });
+        return;
+      }
+
+      res.status(200).json({ message: "Conversation deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }  
 }
 
 export default new ConversationsController();

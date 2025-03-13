@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import {userModel, IUser} from "../models/users_model";
 import BaseController from "./base_controller";
-// import bcrypt from 'bcrypt';
 import { authenticatedRequest } from "./base_controller";
 import { hashPassword } from "./auth_controller";
 
@@ -47,10 +46,8 @@ class UsersController extends BaseController<IUser> {
 
 
     async getMe(req: authenticatedRequest, res: Response) {
-        console.log("asdasdasdasdasdasdasdasdasdasdasd")
         try {
             const userId =  req.params.userId; // User id from auth middleware
-            console.log("boaz      " + userId)
             const user = await userModel.findById(userId);
  
             if (!user) {
