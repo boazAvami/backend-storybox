@@ -65,7 +65,7 @@ class PostsController extends BaseController<IPost> {
     async getPosts(req: Request, res: Response) {
         try {
             const page = parseInt(req.query.page as string) || 1; // Get page number from query
-            const limit = 10; // Number of posts per page
+            const limit = 9; // Number of posts per page
             const skip = (page - 1) * limit; // Calculate how many to skip
             const sender = req.query.sender as string | undefined; // Get sender filter
             const userId = req.params.userId; 
