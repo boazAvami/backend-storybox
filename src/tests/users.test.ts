@@ -25,7 +25,7 @@ const testUser2: User = {
 const nonExistingUserId = "674df5c81b3fe9863591b29a"
 
 beforeAll(async () => {
-    app = await initApp();
+    app = (await initApp()).app;
     await userModel.deleteMany();
 
     // create testUser
@@ -135,6 +135,15 @@ describe("Users Tests", () => {
             { authorization: "JWT " + testUser.accessToken }
         );
         expect(response.statusCode).toBe(403);
+    });
+
+    test("Test success Get User - /me", async () => {
+        const response = await request(app)
+            .get("/users/self/me")
+            .set({ authorization: "JWT " + testUser.accessToken });
+ 
+        expect(response.statusCode).toBe(200);
+        expect(response.body.userName).toBe(usersMock[0].userName);
     });
 
     test("Test Success Delete User", async () => {

@@ -28,7 +28,7 @@ const BadCommentId = 5
 const NonExsistcommentId = "67891771c1dedc3f3f11e04d"
 
 beforeAll(async () => {
-    app = await initApp();
+    app = (await initApp()).app;
     await postModel.deleteMany();
     await commentModel.deleteMany();
     await userModel.deleteMany();

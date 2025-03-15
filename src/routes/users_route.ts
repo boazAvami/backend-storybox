@@ -192,3 +192,25 @@ usersRouter.put('/:id', authMiddleware, usersController.update.bind(usersControl
  *         description: Internal server error
  */
 usersRouter.get('/:id', authMiddleware, usersController.getById.bind(usersController));
+
+/**
+ * @swagger
+ * /users/me:
+ *   get:
+ *     summary: Get the details of the authenticated user
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Unauthorized - No valid token
+ *       500:
+ *         description: Internal server error
+ */
+usersRouter.get('/self/me', authMiddleware, usersController.getMe.bind(usersController));

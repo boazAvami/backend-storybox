@@ -115,10 +115,13 @@ conversationsRouter.post("/:id/messages", authMiddleware, conversationsControlle
  *       - name: id
  *         in: path
  *         required: true
+ *         description: The ID of the conversation to delete
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: Conversation deleted
+ *         description: Conversation deleted successfully
+ *       404:
+ *         description: Conversation not found
  */
-conversationsRouter.delete("/:id", authMiddleware, conversationsController.delete.bind(conversationsController));
+conversationsRouter.delete("/:id", authMiddleware, conversationsController.deleteConversation.bind(conversationsController)); // ✅ Fixed method name
