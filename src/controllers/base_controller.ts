@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 
 export interface authenticatedRequest extends Request {
     userId: string
@@ -75,7 +75,33 @@ abstract class BaseController<T> {
                 }
             }
         } catch (err) {
-            res.status(500).json({ error: err.message });
+            // Handle duplicate key error (MongoDB unique constraint)
+            if (typeof err === "object" && err !== null && "code" in err && (err).code === 11000) {
+                const field = Object.keys((err).keyPattern)[0];
+                
+                // Mapping MongoDB field names to human-friendly labels
+                const fieldLabels: Record<string, string> = {
+                    userName: "User Name",
+                    email: "Email",
+                    phone_number: "Phone Number",
+                    firstName: "First Name",
+                    lastName: "Last Name",
+                };
+                
+                const prettyField = fieldLabels[field] || field; // Default to field name if not mapped
+                res.status(400).json({ message: `${prettyField} already exists` });
+                return;
+            }
+            
+            // Handle Mongoose validation errors
+            if (err instanceof mongoose.Error.ValidationError) {
+                const errors = Object.values(err.errors).map((e) => (e as mongoose.Error.ValidatorError).message);
+                res.status(400).json({ message: errors.join(", ") });
+                return;
+            }
+            
+            // Handle unexpected errors
+            res.status(500).json({ message: "Something went wrong. Please try again later." });
         }
     };
 
