@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Copy package files and install dependencies
 COPY package.json package-lock.json ./
-RUN npm install --only=production
+RUN npm install
 
 # Copy the source code and build
 COPY . ./
@@ -29,3 +29,6 @@ EXPOSE 3000
 
 # Start the server
 CMD ["pm2-runtime", "dist/app.js", "--name", "StoryBox-Server"]
+
+
+# docker build -t backend-storybox:1.0.0 -f.dockerfile .
