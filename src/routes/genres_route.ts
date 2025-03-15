@@ -5,20 +5,30 @@ export const genresRouter = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Genres
+ *   description: API for extracting genres from a given text
+ */
+
+/**
+ * @swagger
  * /genres:
- *   get:
- *     summary: Retrieves genres for a given text
+ *   post:
+ *     summary: Extracts genres from the provided text
  *     tags: [Genres]
- *     parameters:
- *       - name: text
- *         in: query
- *         required: true
- *         description: The text for which to extract genres
- *         schema:
- *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               text:
+ *                 type: string
+ *                 description: The text to analyze for genre classification
  *     responses:
  *       200:
- *         description: An array of genres
+ *         description: An array of up to three detected genres
  *         content:
  *           application/json:
  *             schema:
@@ -26,7 +36,7 @@ export const genresRouter = express.Router();
  *               items:
  *                 type: string
  *       400:
- *         description: Bad request - Missing or invalid text
+ *         description: Bad request - Missing or invalid text parameter
  *       500:
  *         description: Internal server error
  */

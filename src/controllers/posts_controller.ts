@@ -68,7 +68,8 @@ class PostsController extends BaseController<IPost> {
             const limit = 10; // Number of posts per page
             const skip = (page - 1) * limit; // Calculate how many to skip
             const sender = req.query.sender as string | undefined; // Get sender filter
-    
+            const userId = req.params.userId; 
+
             console.log(`Fetching posts - Page: ${page}, Limit: ${limit}, Skip: ${skip}, Sender: ${sender}`);
     
             // Build the filter object
@@ -79,8 +80,13 @@ class PostsController extends BaseController<IPost> {
     
             console.log(`Retrieved ${posts.length} posts (out of ${totalPosts})`);
     
+            const postsDto = await Promise.all(posts.map(async (post) => {
+                const isLiked = await likes_controller.isLikedByMe(post.id, userId);
+                return new PostDto(post, isLiked);  // Create a new PostDto instance
+                }));
+
             res.status(200).json({
-                posts,
+                posts: postsDto,
                 currentPage: page,
                 totalPages: Math.ceil(totalPosts / limit),
             });

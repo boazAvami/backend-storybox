@@ -14,7 +14,7 @@ import bcrypt from 'bcrypt';
 let app: Express;
 
 beforeAll(async () => {
-    app = await initApp();
+    app = (await initApp()).app;
     await userModel.deleteMany();
     await postModel.deleteMany();
 

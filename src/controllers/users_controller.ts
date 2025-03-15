@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import {userModel, IUser} from "../models/users_model";
 import BaseController from "./base_controller";
-// import bcrypt from 'bcrypt';
 import { authenticatedRequest } from "./base_controller";
 import { hashPassword } from "./auth_controller";
 import mongoose from "mongoose";
@@ -71,6 +70,22 @@ class UsersController extends BaseController<IUser> {
             res.status(500).json({ message: "Something went wrong. Please try again later." });
         }
     };
+
+
+    async getMe(req: authenticatedRequest, res: Response) {
+        try {
+            const userId =  req.params.userId; // User id from auth middleware
+            const user = await userModel.findById(userId);
+ 
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+ 
+            res.status(200).json(user);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    }
 }
 
 export default new UsersController();

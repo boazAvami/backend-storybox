@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { userModel } from "../models/users_model"; // Ensure User model is imported
 
 export interface IMessage {
   senderId: string;
@@ -16,7 +17,7 @@ export interface IConversation {
 const messageSchema = new mongoose.Schema({
   senderId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "Users",
     required: true,
   },
   text: {
@@ -37,7 +38,7 @@ const conversationSchema = new mongoose.Schema({
   participants: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Users",
       required: true,
     },
   ],
