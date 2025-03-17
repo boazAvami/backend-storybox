@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "nodemon ./src/app.ts",
     "test": "jest --coverage --detectOpenHandles --forceExit",
-    "deploy": "npm run build:prod && pm2 start dist/app.js --name StoryBox-Server --watch",
+    "deploy": "npm run build:prod && pm2 delete StoryBox-Server &&  pm2 start dist/app.js --name StoryBox-Server --watch",
     "build:dev": "tsc",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
