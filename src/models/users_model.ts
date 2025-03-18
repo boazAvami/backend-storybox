@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { postModel } from "./posts_model";
 import { commentModel } from "./comments_model";
+import { likeModel } from "./likes_model";
 
 export interface IUser {
   _id?: string;
@@ -81,8 +82,9 @@ const userSchema = new mongoose.Schema<IUser>({
 userSchema.pre("findOneAndDelete", async function (next) {
   const userId = this.getFilter()["_id"]; // Get the user ID being deleted
   if (userId) {
-    await postModel.deleteMany({ ownerId: userId }); // ✅ Delete all posts by this user
-    await commentModel.deleteMany({ ownerId: userId }); // ✅ Delete all comments by this user
+    await postModel.deleteMany({ ownerId: userId }); // Delete all posts by this user
+    await commentModel.deleteMany({ ownerId: userId }); // Delete all comments by this user
+    await likeModel.deleteMany({ownerId: userId }) // Delete all likes by this user
   }
   next();
 });

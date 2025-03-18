@@ -50,17 +50,10 @@ const postSchema = new mongoose.Schema<IPost>({
  * Mongoose Middleware for cascading delete when a post is deleted 
  */
 postSchema.pre("findOneAndDelete", async function (next) {
-    const postId = this.getFilter()["_id"]; // ✅ Get the post ID being deleted
+    const postId = this.getFilter()["_id"]; // Get the post ID being deleted
     if (postId) {
-        await commentModel.deleteMany({ postId }); // ✅ Delete all comments linked to this post
-    }
-    next();
-});
-
-postSchema.pre('findOneAndDelete', async function(next) {
-    const postId = this.getFilter()["_id"]; // ✅ Get the post ID being deleted
-    if(postId) {
-        await likeModel.deleteMany({ postId }); // 'this' is the post document
+        await commentModel.deleteMany({ postId }); // Delete all comments linked to this post
+        await likeModel.deleteMany({ postId })  // Delete all likes linked to this post
     }
     next();
 });
