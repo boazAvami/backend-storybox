@@ -91,7 +91,7 @@ describe("Users Tests", () => {
             { authorization: "JWT " + testUser.accessToken }
         );
         
-        expect(response.statusCode).toBe(500);
+        expect(response.statusCode).toBe(400);
     });
 
     test("Test fail Update User - Internal Server Error", async () => {

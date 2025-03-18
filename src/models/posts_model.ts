@@ -26,7 +26,7 @@ const postSchema = new mongoose.Schema<IPost>({
     image_uri: {
         type: String,
         default: "",
-        required: true
+        required: false
     },
     created_at: {
         type: Date,
