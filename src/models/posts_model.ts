@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { commentModel } from './comments_model';
+import { likeModel } from './likes_model';
 
 export interface IPost {
     // _id?: string;
@@ -52,6 +53,14 @@ postSchema.pre("findOneAndDelete", async function (next) {
     const postId = this.getFilter()["_id"]; // ✅ Get the post ID being deleted
     if (postId) {
         await commentModel.deleteMany({ postId }); // ✅ Delete all comments linked to this post
+    }
+    next();
+});
+
+postSchema.pre('findOneAndDelete', async function(next) {
+    const postId = this.getFilter()["_id"]; // ✅ Get the post ID being deleted
+    if(postId) {
+        await likeModel.deleteMany({ postId }); // 'this' is the post document
     }
     next();
 });
