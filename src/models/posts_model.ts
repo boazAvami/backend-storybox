@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { commentModel } from './comments_model';
+import { likeModel } from './likes_model';
 
 export interface IPost {
     // _id?: string;
@@ -25,7 +26,7 @@ const postSchema = new mongoose.Schema<IPost>({
     image_uri: {
         type: String,
         default: "",
-        required: true
+        required: false
     },
     created_at: {
         type: Date,
@@ -49,9 +50,10 @@ const postSchema = new mongoose.Schema<IPost>({
  * Mongoose Middleware for cascading delete when a post is deleted 
  */
 postSchema.pre("findOneAndDelete", async function (next) {
-    const postId = this.getFilter()["_id"]; // ✅ Get the post ID being deleted
+    const postId = this.getFilter()["_id"]; // Get the post ID being deleted
     if (postId) {
-        await commentModel.deleteMany({ postId }); // ✅ Delete all comments linked to this post
+        await commentModel.deleteMany({ postId }); // Delete all comments linked to this post
+        await likeModel.deleteMany({ postId })  // Delete all likes linked to this post
     }
     next();
 });
