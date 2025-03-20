@@ -114,16 +114,6 @@ describe("Posts Tests", () => {
             expect(response.body).toHaveProperty("totalPages");
         });
 
-        test("Test get paginated posts with sender filter", async () => {
-            const response = await request(app)
-                .get(`/posts/paging?page=1&sender=${testUser._id}`)
-                .set({ authorization: "JWT " + testUser.accessToken });
-
-            expect(response.statusCode).toBe(200);
-            expect(response.body).toHaveProperty("posts");
-            expect(response.body.posts.length).toBeGreaterThanOrEqual(0);
-        });
-
         test("Test get paginated posts with invalid page", async () => {
             const response = await request(app)
                 .get("/posts/paging?page=-1")

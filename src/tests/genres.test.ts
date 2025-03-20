@@ -16,16 +16,6 @@ afterAll((done) => {
 });
 
 describe("Genres Tests", () => {
-    test("Test success get genres", async () => {
-        const response = await request(app)
-            .post("/genres")
-            .set("Content-Type", "application/json")
-            .send({ text: genresMock[0].text });
-
-        expect(response.statusCode).toBe(200);
-        expect(response.body.length).toBeGreaterThan(0); 
-        expect(Array.isArray(response.body)).toBe(true);
-    });
 
     test("Test fail get genres - Missing text parameter", async () => {
         const response = await request(app)

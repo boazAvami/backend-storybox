@@ -91,7 +91,6 @@ class PostsController extends BaseController<IPost> {
                 totalPages: Math.ceil(totalPosts / limit),
             });
         } catch (error) {
-            console.error("Error fetching posts:", error);
             res.status(500).json({ message: "Something went wrong with get posts." });
         }
     };
